@@ -2,7 +2,7 @@ import os
 import redis
 from dotenv import load_dotenv
 from flask import Flask, render_template, jsonify
-from config.settings import REDIS_HOST, REDIS_PORT, setup_logger
+from app.config.settings import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, setup_logger
 
 logger = setup_logger()
 # Load environment variables from .env file
@@ -14,7 +14,7 @@ if not consumer_name:
     logger.error("CONSUMER_NAME environment variable not set.")
     exit(1)  # Exit if no consumer name is specified
 
-redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
 GROUP_NAME = "waiters"
 
 

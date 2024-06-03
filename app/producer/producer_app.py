@@ -1,12 +1,12 @@
 from flask import Flask, render_template, jsonify
 import redis
-from config.settings import REDIS_HOST, REDIS_PORT, setup_logger
+from app.config.settings import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, setup_logger
 
 app = Flask(__name__)
 logger = setup_logger()
 
 # Connect to Redis
-redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
 
 # Stream names as defined in producer.py
 STREAM_NAMES = {

@@ -3,7 +3,10 @@ import sys
 import os
 import random
 from time import sleep
-from config.settings import REDIS_HOST, REDIS_PORT, setup_logger
+# This computes the absolute path to the root of the project
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+from app.config.settings import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, setup_logger
 
 # Setup logger
 logger = setup_logger()
@@ -29,7 +32,7 @@ def process_message(stream, message_id, message):
 class Waiter:
     def __init__(self, consumer_name):
         self.consumer_name = consumer_name
-        self.client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+        self.client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
         self.ensure_groups_exist()
 
     def ensure_groups_exist(self):

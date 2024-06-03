@@ -1,14 +1,20 @@
+import os
+import sys
+
 import redis
 from random import choice, randint
 from time import sleep
-from config.settings import REDIS_HOST, REDIS_PORT
-from config.settings import setup_logger
+# This computes the absolute path to the root of the project
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+from app.config.settings import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD
+from app.config.settings import setup_logger
 
 # Setup logger
 logger = setup_logger()
 
 # Establish Redis connection
-redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
 
 
 def publish_dish(stream_name, dish):
@@ -50,7 +56,7 @@ def chef_jacquin_menu():
             dish_name = choice(desserts)
             stream = 'stream:desserts'
 
-        dish_speed = randint(5, 15)  # Random preparation time
+        dish_speed = randint(2, 4)  # Random preparation time
         dish = {
             'name': dish_name,  # Ensure the name is a string, not bytes
             'prep_time': str(dish_speed)
