@@ -31,6 +31,35 @@ docker run -it --name stream_consumer \
 -e REDIS_PASSWORD=blablabla \
 gacerioni/gabs-redis-stream-demo:1.0.0 consumer gabsthewaiter
 ```
+## Quickest way to try this
+```shell
+# Start a Producer (sends messages to the stream)
+docker run -it --rm --name stream_producer \
+-e REDIS_HOST=host.docker.internal \
+-e REDIS_PORT=6379 \
+gacerioni/gabs-redis-stream-demo:1.0.0 producer
+
+
+# Start a Consumer (gabsthewaiter)
+docker run -it --rm --name stream_consumer1 \
+-e REDIS_HOST=host.docker.internal \
+-e REDIS_PORT=6379 \
+gacerioni/gabs-redis-stream-demo:1.0.0 consumer gabsthewaiter
+
+
+# Start another Consumer (gabithewaitress)
+docker run -it --rm --name stream_consumer2 \
+-e REDIS_HOST=host.docker.internal \
+-e REDIS_PORT=6379 \
+gacerioni/gabs-redis-stream-demo:1.0.0 consumer gabithewaitress
+
+
+# Start the Supervisor (monitors workers)
+docker run -it --rm --name stream_supervisor \
+-e REDIS_HOST=host.docker.internal \
+-e REDIS_PORT=6379 \
+gacerioni/gabs-redis-stream-demo:1.0.0 supervisor
+```
 
 ## Possible Roles and Arguments
 
